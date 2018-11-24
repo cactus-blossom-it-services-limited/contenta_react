@@ -17,12 +17,19 @@ const routes = [
     strict: true,
   },
   {
+    path: '/features',
+    component: RecipeLanding,
+    exact: true,
+    strict: true,
+  },
+  {
     path: '/recipes',
     component: RecipeLanding,
     exact: true,
     strict: true,
   },
   {
+<<<<<<< HEAD
     path: '/feature',
     component: FeatureLanding,
     exact: true,
@@ -31,6 +38,10 @@ const routes = [
   {
     path: '/magazine',
     component: MagazineLanding,
+=======
+    path: '/magazine',
+    component: RecipeLanding,
+>>>>>>> origin/nav-menu
     exact: true,
     strict: true,
   },

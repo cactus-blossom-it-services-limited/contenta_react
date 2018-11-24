@@ -5,10 +5,13 @@ import breakpoints from '../../../styles/breakpoints';
 
 const links = [
   ['Home', '/', 'home'],
-  // ['Features', '/features', 'features'],
+  ['Features', '/features', 'features'],
   ['Recipes', '/recipes', 'recipes'],
+<<<<<<< HEAD
   // ['Magazine', '/magazine', 'magazine'],
   ['Feature', '/feature', 'feature'],
+=======
+>>>>>>> origin/nav-menu
   ['Magazine', '/magazine', 'magazine'],
 ];
 
