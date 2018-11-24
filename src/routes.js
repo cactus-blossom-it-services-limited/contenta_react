@@ -6,6 +6,8 @@
  */
 import Home from './components/04_template/Home/Home';
 import RecipeLanding from './components/04_template/RecipeLanding/RecipeLanding';
+import FeatureLanding from './components/04_template/FeatureLanding'
+import MagazineLanding from './components/04_template/MagazineLanding'
 
 const routes = [
   {
@@ -17,6 +19,18 @@ const routes = [
   {
     path: '/recipes',
     component: RecipeLanding,
+    exact: true,
+    strict: true,
+  },
+  {
+    path: '/feature',
+    component: FeatureLanding,
+    exact: true,
+    strict: true,
+  },
+  {
+    path: '/magazine',
+    component: MagazineLanding,
     exact: true,
     strict: true,
   },

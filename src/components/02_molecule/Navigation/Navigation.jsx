@@ -8,6 +8,8 @@ const links = [
   // ['Features', '/features', 'features'],
   ['Recipes', '/recipes', 'recipes'],
   // ['Magazine', '/magazine', 'magazine'],
+  ['feature', '/feature', 'feature'],
+  ['magazine', '/magazine', 'magazine'],
 ];
 
 const Navigation = () => (
