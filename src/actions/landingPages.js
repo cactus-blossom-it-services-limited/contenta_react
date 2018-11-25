@@ -1,30 +1,52 @@
-import axios from 'axios';
-import * as apiActions from './api';
+import axios from 'axios'
+import * as apiActions from './api'
 
-const api = process.env.REACT_APP_JSONAPI;
+const api = process.env.REACT_APP_JSONAPI
 
-export const STORE_RECIPE_LANDING_PAGE = 'LOAD_RECIPE_LANDING_PAGE';
-export function storeRecipeLandingPage(categories, recipesByCategory) {
+export const STORE_RECIPE_LANDING_PAGE = 'LOAD_RECIPE_LANDING_PAGE'
+export function storeRecipeLandingPage (categories, recipesByCategory) {
   return {
     type: STORE_RECIPE_LANDING_PAGE,
     payload: {
       categories,
-      recipesByCategory,
-    },
-  };
+      recipesByCategory
+    }
+  }
 }
 
-export function loadRecipeLandingPage() {
+export const STORE_FEATURE_LANDING_PAGE = 'LOAD_FEATURE_LANDING_PAGE'
+export function storeFeatureLandingPage (categories, recipesByCategory) {
+  return {
+    type: STORE_RECIPE_LANDING_PAGE,
+    payload: {
+      categories,
+      recipesByCategory
+    }
+  }
+}
+
+export const STORE_MAGAZINE_LANDING_PAGE = 'LOAD_MAGAZINE_LANDING_PAGE'
+export function storeMagazineLandingPage (categories, recipesByCategory) {
+  return {
+    type: STORE_RECIPE_LANDING_PAGE,
+    payload: {
+      categories,
+      recipesByCategory
+    }
+  }
+}
+
+export function loadRecipeLandingPage () {
   return function (dispatch) {
-    let pageCategories = [];
+    let pageCategories = []
     return axios(`${api}/categories`)
       .then((result) => {
-        dispatch(apiActions.storeAPIData(result.data));
-        return result.data.data;
+        dispatch(apiActions.storeAPIData(result.data))
+        return result.data.data
       })
       .then(categories => categories.map(category => category.id))
       .then((categories) => {
-        pageCategories = categories;
+        pageCategories = categories
         return Promise.all(categories.map(category =>
           axios(`${api}/recipes`, {
             params: {
@@ -32,17 +54,88 @@ export function loadRecipeLandingPage() {
               'page[limit]': 4,
               sort: 'created',
               include: 'image,image.thumbnail',
-              isPromoted: true,
-            },
-          }),
-        ));
+              isPromoted: true
+            }
+          })
+        ))
       })
+
       .then((result) => {
         result.forEach((recipesInCategory) => {
-          dispatch(apiActions.storeAPIData(recipesInCategory.data));
-        });
+          dispatch(apiActions.storeAPIData(recipesInCategory.data))
 
-        dispatch(storeRecipeLandingPage(pageCategories, result));
-      });
+        })
+        dispatch(storeRecipeLandingPage(pageCategories, result))
+      })
+  };
+}
+
+export function loadFeatureLandingPage () {
+  return function (dispatch) {
+    let pageCategories = []
+    return axios(`${api}/categories`)
+      .then((result) => {
+        dispatch(apiActions.storeAPIData(result.data))
+        return result.data.data
+      })
+
+      .then(categories => categories.map(category => category.id))
+      .then((categories) => {
+        pageCategories = categories
+        return Promise.all(categories.map(category =>
+          axios(`${api}/recipes`, {
+            params: {
+              'filter[category.uuid][value]': category,
+              'page[limit]': 4,
+              sort: 'created',
+              include: 'image,image.thumbnail',
+              isPromoted: true
+            }
+          })
+        ))
+      })
+
+      .then((result) => {
+        result.forEach((recipesInCategory) => {
+          dispatch(apiActions.storeAPIData(recipesInCategory.data))
+        })
+
+        dispatch(storeFeatureLandingPage(pageCategories, result))
+      })
+  };
+}
+
+export function loadMagazineLandingPage () {
+  return function (dispatch) {
+    let pageCategories = []
+    return axios(`${api}/categories`)
+      .then((result) => {
+        dispatch(apiActions.storeAPIData(result.data))
+        return result.data.data
+      })
+
+      .then(categories => categories.map(category => category.id))
+      .then((categories) => {
+        pageCategories = categories
+        return Promise.all(categories.map(category =>
+          axios(`${api}/recipes`, {
+            params: {
+              'filter[category.uuid][value]': category,
+              'page[limit]': 4,
+              sort: 'created',
+              include: 'image,image.thumbnail',
+              isPromoted: true
+            }
+          })
+        ))
+      })
+
+      .then((result) => {
+        result.forEach((recipesInCategory) => {
+          dispatch(apiActions.storeAPIData(recipesInCategory.data))
+        })
+
+        dispatch(storeMagazineLandingPage(pageCategories, result))
+      })
   };
 }
